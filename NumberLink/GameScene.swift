@@ -18,13 +18,7 @@ class GameScene: SKScene {
         
         anchorPoint = CGPoint(x: 0, y: 1.0)
         
-        let grid: [[GridTypes]] = [
-            [.Obstacle, .Empty, .Obstacle],
-            [.Empty, .Obstacle, .Empty],
-            [.Obstacle, .Empty, .Obstacle]
-        ]
-        
-        let puzzle: Puzzle = Puzzle(grid: grid)
+        println("Puzzle is \(Game.shared.puzzle.size.width) wide and \(Game.shared.puzzle.size.height) tall")
     }
     
     override func update(currentTime: CFTimeInterval) {
