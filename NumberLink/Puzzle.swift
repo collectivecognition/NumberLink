@@ -24,7 +24,7 @@ class Puzzle {
     
     var size: GridSize {
         get {
-            return GridSize(width: grid.count, height: grid[0].count)
+            return GridSize(width: grid[0].count, height: grid.count)
         }
     }
 }
