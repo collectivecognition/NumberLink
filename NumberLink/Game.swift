@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Collective Cognition. All rights reserved.
 //
 
+import SpriteKit
+
 private let _GameSharedInstance = Game()
 
 class Game {
@@ -13,15 +15,21 @@ class Game {
     
     init () {
         let grid: [[GridTypes]] = [
-            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
-            [.Empty, .Obstacle, .Empty, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
-            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
-            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
-            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
-            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle]
+            [.Obstacle,     .Terminal(0),   .Empty,         .Empty,         .Terminal(0),   .Obstacle],
+            [.Empty,        .Empty,         .Empty,         .Empty,         .Empty,         .Empty],
+            [.Empty,        .Empty,         .Terminal(2),   .Empty,         .Terminal(1),   .Empty],
+            [.Empty,        .Empty,         .Empty,         .Empty,         .Empty,         .Empty],
+            [.Empty,        .Terminal(1),   .Empty,         .Empty,         .Empty,         .Empty],
+            [.Obstacle,     .Empty,         .Empty,         .Empty,         .Empty,         .Obstacle]
         ]
         
-        puzzle = Puzzle(grid: grid)
+        let colors = [
+            SKColor.redColor(),
+            SKColor.blueColor(),
+            SKColor.greenColor()
+        ]
+        
+        puzzle = Puzzle(grid: grid, colors: colors)
     }
     
     class var shared: Game {

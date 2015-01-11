@@ -16,7 +16,7 @@ class GameScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         
-        anchorPoint = CGPoint(x: 0, y: 1.0)
+        anchorPoint = CGPoint(x: 0, y: 0)
         
         let frameWidth = frame.size.width
         let frameHeight = frame.size.height
@@ -28,7 +28,7 @@ class GameScene: SKScene {
         
         let startPosition = CGPoint(
             x: frameWidth / 2 - CGFloat(Game.shared.puzzle.size.width) * tileSize / 2 + tileSize / 2,
-            y: -frameHeight / 2 + CGFloat(Game.shared.puzzle.size.height) * tileSize / 2 - tileSize / 2
+            y: frameHeight / 2 - CGFloat(Game.shared.puzzle.size.height) * tileSize / 2 - tileSize / 2
         )
 
         let nodeSize = CGSizeMake(tileSize, tileSize)
@@ -39,14 +39,18 @@ class GameScene: SKScene {
                 var node = SKShapeNode(rectOfSize: nodeSize)
                 node.position = CGPoint(
                     x: startPosition.x + tileSize * CGFloat(j),
-                    y: startPosition.y - tileSize * CGFloat(i)
+                    y: startPosition.y + tileSize * CGFloat(Game.shared.puzzle.size.height - i)
                 )
                 
-                if(Game.shared.puzzle.grid[i][j] == GridTypes.Obstacle) {
-                    node.fillColor = SKColor.greenColor()
-                }
-                else {
-                    node.fillColor = SKColor.blueColor()
+                let gridCell = Game.shared.puzzle.grid[i][j]
+                
+                switch(gridCell) {
+                case GridTypes.Obstacle:
+                        node.fillColor = SKColor.whiteColor()
+                    case GridTypes.Terminal(let color):
+                        node.fillColor = Game.shared.puzzle.colors[color]
+                    default:
+                        node.fillColor = SKColor.blackColor()
                 }
                 
                 self.addChild(node)
