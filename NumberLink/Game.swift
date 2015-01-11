@@ -13,9 +13,12 @@ class Game {
     
     init () {
         let grid: [[GridTypes]] = [
-            [.Obstacle, .Empty, .Obstacle],
-            [.Empty, .Obstacle, .Empty],
-            [.Obstacle, .Empty, .Obstacle]
+            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
+            [.Empty, .Obstacle, .Empty, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
+            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
+            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
+            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle],
+            [.Obstacle, .Empty, .Obstacle, .Obstacle, .Obstacle, .Empty, .Obstacle, .Obstacle]
         ]
         
         puzzle = Puzzle(grid: grid)

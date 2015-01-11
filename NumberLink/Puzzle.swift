@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Collective Cognition. All rights reserved.
 //
 
-enum GridTypes {
-    case Empty, Obstacle
+enum GridTypes: Int {
+    case Empty = 1, Obstacle
 }
 
 struct GridSize {
