@@ -63,7 +63,9 @@ class GameScene: SKScene {
     }
     
     func locationToGridIndexes(location: CGPoint) -> ([Int]) {
-        return []
+        let x = Int(floor((location.x - startPosition.x + tileSize / 2) / tileSize))
+        let y = Game.shared.puzzle.size.height - Int(floor((location.y - startPosition.y + tileSize / 2) / tileSize))
+        return [x, y]
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -75,6 +77,8 @@ class GameScene: SKScene {
         
         for touch in touches {
             let location = touch.locationInNode(self)
+            let gridIndexes = locationToGridIndexes(location)
+            println("Touched \(gridIndexes[0])x\(gridIndexes[1])")
             let touchedNode = nodeAtPoint(location)
             touchedNode.zPosition = 15
         }
