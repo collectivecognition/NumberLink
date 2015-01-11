@@ -28,11 +28,4 @@ class GameViewController: UIViewController {
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        super.touchesBegan(touches, withEvent: event)
-        
-        // let location = touches.anyObject().locationInNode(self)
-        // let node = self.nodeAtPoint(location)
-    }
 }
