@@ -13,6 +13,9 @@ class GameScene: SKScene {
     let padding: CGFloat = 20.0
     let tileSize: CGFloat = 0
     let startPosition: CGPoint = CGPoint(x: 0.0, y: 0.0)
+
+    var isDrawingLine = false
+    var currentLineColor: Int = 0
     
     required init(coder aCoder: NSCoder) {
         fatalError("NSCoder not supported")
@@ -49,10 +52,12 @@ class GameScene: SKScene {
                 let gridCell = Game.shared.puzzle.grid[i][j]
                 
                 switch(gridCell) {
-                case GridTypes.Obstacle:
+                    case .Obstacle:
                         node.fillColor = SKColor.whiteColor()
-                    case GridTypes.Terminal(let color):
+                    
+                    case .Terminal(let color):
                         node.fillColor = Game.shared.puzzle.colors[color]
+                    
                     default:
                         node.fillColor = SKColor.blackColor()
                 }
@@ -62,10 +67,15 @@ class GameScene: SKScene {
         }
     }
     
-    func locationToGridIndexes(location: CGPoint) -> ([Int]) {
+    func locationToGridIndexes(location: CGPoint) -> [Int] {
         let x = Int(floor((location.x - startPosition.x + tileSize / 2) / tileSize))
         let y = Game.shared.puzzle.size.height - Int(floor((location.y - startPosition.y + tileSize / 2) / tileSize))
         return [x, y]
+    }
+    
+    func locationToGridCell(location: CGPoint) -> (GridTypes) {
+        var gridIndexes = locationToGridIndexes(location)
+        return Game.shared.puzzle.grid[gridIndexes[1]][gridIndexes[0]]
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -77,26 +87,36 @@ class GameScene: SKScene {
         
         for touch in touches {
             let location = touch.locationInNode(self)
-            let gridIndexes = locationToGridIndexes(location)
-            println("Touched \(gridIndexes[0])x\(gridIndexes[1])")
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 15
+            let gridCell = locationToGridCell(location)
+            
+            switch(gridCell) {
+                case .Terminal(let color):
+                    currentLineColor = color
+                    isDrawingLine = true
+                default: ()
+            }
         }
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        for touch in touches {
-            let location = touch.locationInNode(self)
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.position = location
+        if(isDrawingLine) {
+            for touch in touches {
+                let location = touch.locationInNode(self)
+                let gridIndexes = locationToGridIndexes(location)
+                let gridCell = locationToGridCell(location)
+                
+                switch(gridCell) {
+                    case .Empty:
+                        Game.shared.puzzle.grid[gridIndexes[1]][gridIndexes[0]] = GridTypes.Terminal(currentLineColor)
+                    default: ()
+                }
+            }
         }
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         for touch in touches {
-            let location = touch.locationInNode(self)
-            let touchedNode = nodeAtPoint(location)
-            touchedNode.zPosition = 0
+            isDrawingLine = false
         }
     }
 }
