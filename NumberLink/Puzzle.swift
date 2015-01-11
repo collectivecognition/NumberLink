@@ -6,8 +6,14 @@
 //  Copyright (c) 2015 Collective Cognition. All rights reserved.
 //
 
+import SpriteKit
+
 enum GridTypes {
-    case Empty, Obstacle
+    case Empty
+    case Obstacle
+    case Terminal(Int)
+    case HorizontalLine(Int)
+    case VerticalLine(Int)
 }
 
 struct GridSize {
@@ -17,9 +23,11 @@ struct GridSize {
 
 class Puzzle {
     var grid: [[GridTypes]]
+    var colors: [SKColor]
 
-    init (grid: [[GridTypes]]) {
+    init (grid: [[GridTypes]], colors: [SKColor]) {
         self.grid = grid
+        self.colors = colors
     }
     
     var size: GridSize {

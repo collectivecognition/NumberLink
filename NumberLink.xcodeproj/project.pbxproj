@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		360128711A61D223009374FB /* Puzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360128701A61D223009374FB /* Puzzle.swift */; };
+		360128731A61F0BD009374FB /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360128721A61F0BD009374FB /* Game.swift */; };
 		363D597E1A61B05A006FE900 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363D597D1A61B05A006FE900 /* AppDelegate.swift */; };
 		363D59821A61B05A006FE900 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363D59811A61B05A006FE900 /* GameScene.swift */; };
 		363D59841A61B05A006FE900 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363D59831A61B05A006FE900 /* GameViewController.swift */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		360128701A61D223009374FB /* Puzzle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Puzzle.swift; sourceTree = "<group>"; };
+		360128721A61F0BD009374FB /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		363D59781A61B05A006FE900 /* NumberLink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NumberLink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		363D597C1A61B05A006FE900 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		363D597D1A61B05A006FE900 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				363D598A1A61B05A006FE900 /* LaunchScreen.xib */,
 				363D597B1A61B05A006FE900 /* Supporting Files */,
 				360128701A61D223009374FB /* Puzzle.swift */,
+				360128721A61F0BD009374FB /* Game.swift */,
 			);
 			path = NumberLink;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				363D59821A61B05A006FE900 /* GameScene.swift in Sources */,
+				360128731A61F0BD009374FB /* Game.swift in Sources */,
 				360128711A61D223009374FB /* Puzzle.swift in Sources */,
 				363D59841A61B05A006FE900 /* GameViewController.swift in Sources */,
 				363D597E1A61B05A006FE900 /* AppDelegate.swift in Sources */,
