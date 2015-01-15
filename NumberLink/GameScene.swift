@@ -12,10 +12,13 @@ class GameScene: SKScene {
     let frameWidth: CGFloat = 0, frameHeight: CGFloat = 0
     let padding: CGFloat = 20.0
     let tileSize: CGFloat = 0
-    let startPosition: CGPoint = CGPoint(x: 0.0, y: 0.0)
-
+    let startPosition = CGPoint(x: 0.0, y: 0.0)
+    let nodeSize = CGSize(width: 0.0, height: 0.0)
+    
     var isDrawingLine = false
     var currentLineColor: Int = 0
+    
+    var nodes: [[SKShapeNode]] = [[SKShapeNode()]]
     
     required init(coder aCoder: NSCoder) {
         fatalError("NSCoder not supported")
@@ -38,12 +41,17 @@ class GameScene: SKScene {
             y: frameHeight / 2 - CGFloat(Game.shared.puzzle.size.height) * tileSize / 2 - tileSize / 2
         )
 
-        let nodeSize = CGSizeMake(tileSize, tileSize)
+        nodeSize = CGSizeMake(tileSize, tileSize)
+        
+        // nodes = Array(count: Game.shared.puzzle.size.width, repeatedValue: Array(count: Game.shared.puzzle.size.height, repeatedValue: SKShapeNode(rectOfSize: nodeSize)))
         
         for var i = 0; i < Game.shared.puzzle.size.height; i++ {
+            nodes.append([SKShapeNode]())
+            
             for var j = 0; j < Game.shared.puzzle.size.width; j++ {
                 
                 var node = SKShapeNode(rectOfSize: nodeSize)
+                
                 node.position = CGPoint(
                     x: startPosition.x + tileSize * CGFloat(j),
                     y: startPosition.y + tileSize * CGFloat(Game.shared.puzzle.size.height - i)
@@ -63,6 +71,7 @@ class GameScene: SKScene {
                 }
                 
                 self.addChild(node)
+                nodes[i].append(node)
             }
         }
     }
@@ -79,7 +88,18 @@ class GameScene: SKScene {
     }
     
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+        for var i = 0; i < Game.shared.puzzle.size.height; i++ {
+            for var j = 0; j < Game.shared.puzzle.size.width; j++ {
+                let node = nodes[i][j]
+                let gridCell = Game.shared.puzzle.grid[i][j]
+                
+                switch gridCell {
+                    case .Terminal(let color):
+                        node.fillColor = Game.shared.puzzle.colors[color]
+                    default: ()
+                }
+            }
+        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
