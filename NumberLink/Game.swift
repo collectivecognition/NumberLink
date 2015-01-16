@@ -16,11 +16,11 @@ class Game {
     init () {
         let grid: [[GridTypes]] = [
             [.Obstacle,     .Terminal(0),   .Empty,         .Empty,         .Terminal(0),   .Obstacle],
-            [.Empty,        .Empty,         .Empty,         .Empty,         .Empty,         .Empty],
+            [.Empty,        .Terminal(0),   .Empty,         .Empty,         .Terminal(0),   .Empty],
             [.Empty,        .Empty,         .Terminal(2),   .Empty,         .Terminal(1),   .Empty],
             [.Empty,        .Empty,         .Empty,         .Empty,         .Empty,         .Empty],
             [.Empty,        .Terminal(1),   .Empty,         .Empty,         .Empty,         .Empty],
-            [.Obstacle,     .Empty,         .Empty,         .Empty,         .Empty,         .Obstacle]
+            [.Obstacle,     .Empty,         .Empty,         .Empty,         .Terminal(2),   .Obstacle]
         ]
         
         let colors = [

@@ -18,7 +18,7 @@ class GameScene: SKScene {
     var isDrawingLine = false
     var currentLineColor: Int = 0
     
-    var nodes: [[SKShapeNode]] = [[SKShapeNode()]]
+    var nodes: [[SKSpriteNode]] = [[SKSpriteNode()]]
     
     required init(coder aCoder: NSCoder) {
         fatalError("NSCoder not supported")
@@ -28,6 +28,8 @@ class GameScene: SKScene {
         super.init(size: size)
         
         anchorPoint = CGPoint(x: 0, y: 0)
+        
+        // Calculate some handy values we'll use for rendering later
         
         frameWidth = frame.size.width
         frameHeight = frame.size.height
@@ -43,32 +45,36 @@ class GameScene: SKScene {
 
         nodeSize = CGSizeMake(tileSize, tileSize)
         
-        // nodes = Array(count: Game.shared.puzzle.size.width, repeatedValue: Array(count: Game.shared.puzzle.size.height, repeatedValue: SKShapeNode(rectOfSize: nodeSize)))
+        // Initialize the spritekit nodes that make up our puzzle
         
         for var i = 0; i < Game.shared.puzzle.size.height; i++ {
-            nodes.append([SKShapeNode]())
+            nodes.append([SKSpriteNode]())
             
             for var j = 0; j < Game.shared.puzzle.size.width; j++ {
                 
-                var node = SKShapeNode(rectOfSize: nodeSize)
-                
-                node.position = CGPoint(
-                    x: startPosition.x + tileSize * CGFloat(j),
-                    y: startPosition.y + tileSize * CGFloat(Game.shared.puzzle.size.height - i)
-                )
-                
+                var node: SKSpriteNode
                 let gridCell = Game.shared.puzzle.grid[i][j]
                 
                 switch(gridCell) {
                     case .Obstacle:
-                        node.fillColor = SKColor.whiteColor()
+                        node = SKSpriteNode(imageNamed: "Obstacle")
+                        node.color = SKColor.whiteColor()
                     
                     case .Terminal(let color):
-                        node.fillColor = Game.shared.puzzle.colors[color]
+                        node = SKSpriteNode(imageNamed: "Terminal")
+                        node.color = Game.shared.puzzle.colors[color]
                     
                     default:
-                        node.fillColor = SKColor.blackColor()
+                        node = SKSpriteNode(imageNamed: "VerticalLine")
+                        node.color = SKColor.blackColor()
                 }
+                
+                node.colorBlendFactor = 1.0
+                node.size = nodeSize
+                node.position = CGPoint(
+                    x: startPosition.x + tileSize * CGFloat(j),
+                    y: startPosition.y + tileSize * CGFloat(Game.shared.puzzle.size.height - i)
+                )
                 
                 self.addChild(node)
                 nodes[i].append(node)
@@ -92,10 +98,9 @@ class GameScene: SKScene {
             for var j = 0; j < Game.shared.puzzle.size.width; j++ {
                 let node = nodes[i][j]
                 let gridCell = Game.shared.puzzle.grid[i][j]
-                
                 switch gridCell {
-                    case .Terminal(let color):
-                        node.fillColor = Game.shared.puzzle.colors[color]
+                    case .HorizontalLine(let color): ()
+                        node.color = Game.shared.puzzle.colors[color]
                     default: ()
                 }
             }
@@ -127,7 +132,7 @@ class GameScene: SKScene {
                 
                 switch(gridCell) {
                     case .Empty:
-                        Game.shared.puzzle.grid[gridIndexes[1]][gridIndexes[0]] = GridTypes.Terminal(currentLineColor)
+                        Game.shared.puzzle.grid[gridIndexes[1]][gridIndexes[0]] = GridTypes.HorizontalLine(currentLineColor)
                     default: ()
                 }
             }
